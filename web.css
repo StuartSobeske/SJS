@@ -1,5 +1,5 @@
 body {
-  background-color: #00382B;
+  background-color: #ebdec7;
   margin: 0px;
 }
 
@@ -74,4 +74,24 @@ body {
 
 .clickable-image {
   cursor: pointer;
+}
+
+.letter-pair-trainer{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 150px;
+}
+
+.letter-pair-trainer > div {
+  padding: 12px;
+  border: 2px solid rgb(22, 11, 11);
+  border-radius: 5px;
+  background-color: antiquewhite;
+}
+
+.letter-pair-trainer .timer {
+  font-size: xxx-large;
+  font-family: sans-serif;
+  text-align: center;
+  align-content: center;
 }
