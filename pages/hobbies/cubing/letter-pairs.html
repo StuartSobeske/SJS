@@ -1,9 +1,93 @@
 <div class="letter-pair-trainer">
-    <div style="grid-column-start: 1; grid-column-end:2 ; grid-row-start: 1; grid-row-end: 4; "> test 1</div>
+    <div style="grid-column-start: 1; grid-column-end:2 ; grid-row-start: 1; grid-row-end: 4; ">
+        <div>Letter Pairs:</div>        
+        <div class="letter-pair-selector">
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+            <div>D</div>
+            <div>E</div>
+            <div>F</div>
+            <div>G</div>
+            <div>H</div>
+            <div>I</div>
+            <div>J</div>
+            <div>K</div>
+            <div>L</div>
+            <div>M</div>
+            <div>N</div>
+            <div>O</div>
+            <div>P</div>
+            <div>Q</div>
+            <div>R</div>
+            <div>S</div>
+            <div>T</div>
+            <div>U</div>
+            <div>V</div>
+            <div id="letter-pair-selector-w">W</div>
+            <div id="letter-pair-selector-x">X</div>
+            <div id="letter-pair-selector-y">Y</div>
+            <div id="letter-pair-selector-z">Z</div>
+        </div>
+        <div class="letter-pair-checkboxes">
+            <div>
+                <label for="letter-pair-w-checkbox">W</label>
+                <input type="checkbox" id="letter-pair-w-checkbox" checked="true" data-checkbox-for="letter-pair-selector-w" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">X</label>
+                <input type="checkbox" id="letter-pair-x-checkbox" checked="true" data-checkbox-for="letter-pair-selector-x" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">Y</label>
+                <input type="checkbox" id="letter-pair-y-checkbox" checked="true" data-checkbox-for="letter-pair-selector-y" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">Z</label>
+                <input type="checkbox" id="letter-pair-z-checkbox" checked="true" data-checkbox-for="letter-pair-selector-z" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+        </div>
+        <div class="letter-pair-settings">
+            <div>
+                <label for="timer-length-input">training length</label>
+                <input id="timer-length-input" type="number">
+            </div>
+            <!-- <div>
+                <label for="timer-length-input2">length</label>
+                <input id="timer-length-input2">
+            </div>
+            <div>
+                <label for="timer-length-input3">length</label>
+                <input id="timer-length-input3">
+            </div> -->
+        </div>
+    </div>
     <div class="timer" style="grid-column-start: 2; grid-column-end: 4; ">
         <div id="letter-pair-trainer-timer">
-            timer
+            00.00
         </div>
     </div>
     <div style="grid-row-start: 2; grid-row-end: 4; grid-column-start: 2; grid-column-end: 4; ">test2</div>
 </div>
+<script class="init-script">
+
+    window.handleLetterPairCheckboxClick = function(e) {
+        let checkboxFor = e.getAttribute('data-checkbox-for');
+        let selector = document.getElementById(checkboxFor);
+        if(e.checked === true) {
+            selector.style.display = '';
+            selector.classList.remove('disabled');
+        }
+        else{
+            selector.style.display = 'none';
+            selector.classList.add('disabled');
+        }
+    }
+
+    let letterPairs = document.querySelectorAll('.letter-pair-selector > div');
+    letterPairs.forEach(function(div) {
+        div.addEventListener('click', function(e){
+            e.target.classList.toggle('disabled');
+        });
+    });
+</script>

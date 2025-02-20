@@ -1,4 +1,4 @@
-let timerEnabled = true;
+let timerEnabled = false;
 let timerRunning = false;
 let timerStartTime;
 let timerInterval;

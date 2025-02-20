@@ -84,6 +84,7 @@ body {
 
 .letter-pair-trainer > div {
   padding: 12px;
+  margin: 1px;
   border: 2px solid rgb(22, 11, 11);
   border-radius: 5px;
   background-color: antiquewhite;
@@ -94,4 +95,39 @@ body {
   font-family: sans-serif;
   text-align: center;
   align-content: center;
+}
+
+.letter-pair-selector {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.letter-pair-selector > div{
+  border: 1px solid rgb(22, 11, 11);
+  margin: 1px;
+  border-radius: 5px;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.letter-pair-selector > div {
+  background-color:rgb(194, 236, 174);
+}
+
+.letter-pair-selector > div.disabled {
+  background-color:rgb(243, 124, 45);
+}
+
+.letter-pair-checkboxes {
+  width: 100%;
+}
+
+.letter-pair-checkboxes > div{
+  margin: 5px;
+  display: inline-block;
+}
+
+.letter-pair-settings > div {
+  width: 100%;
 }
