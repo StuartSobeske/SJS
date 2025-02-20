@@ -131,3 +131,10 @@ body {
 .letter-pair-settings > div {
   width: 100%;
 }
+
+.letter-display {
+  font-size: xxx-large;
+  font-family: sans-serif;
+  text-align: center;
+  align-content: center;
+}
