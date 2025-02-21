@@ -71,14 +71,36 @@
         Press Space To Begin
     </div>
     <div style="grid-column-start: 1; grid-column-end: 4;">
-
+        <div style="justify-content: center; display: flex; height: 100%;">
+            <div id="timer-space-to-stop-display" class="letter-display" style="display: none;">Press Space to end memorization phase</div>
+            <div id="timer-results-input-container" style="display: none;" style="width: 50%;">
+                <input id="timer-results-input" style="width: 50%;">
+                <button onclick="timerCheckAnswer()">Check Answer</button>
+            </div>
+        </div>
     </div>  
 </div>
 <script class="init-script">
 
+    window.timerCheckAnswer = function(){
+        let answer = document.getElementById('timer-results-input').value;
+        console.log(answer);
+        window.letterGenerator.checkAnswer(answer);
+    }
+
     window.LetterGenerator = class {
         constructor(div) {
             this.div = div;
+        }
+
+        checkAnswer(answer) {
+            const lettersOnly = answer.replace(/[^a-z]/gi, '');
+            const upperCase = lettersOnly.toUpperCase();
+            const answerList = upperCase.split('');
+            const length = Math.max(answerList.length, this.letterList.length);
+            for(let i = 0; i < length; i++) {
+                
+            }
         }
 
         generateLetterList() {
@@ -146,12 +168,18 @@
     window.keydownTimer = function(event){
 
         if(event.code === 'Space'){
-            if(window.timer.running === false){
+            if(window.timer.running === false && window.timer.checkingAnswer !== true){
                 window.letterGenerator.generateLetterList();
                 window.timer.start();
+                document.getElementById('timer-space-to-stop-display').style.display = '';
+                document.getElementById('timer-results-input-container').style.display = 'none';
             }
-            else {
+            else if (window.timer.running === true){
                 window.timer.stop();
+                document.getElementById('timer-space-to-stop-display').style.display = 'none';
+                document.getElementById('timer-results-input-container').style.display = '';
+                window.timer.checkingAnswer = true;
+                document.getElementById('timer-letter-display').innerHTML = 'Input answer below ';
             }
         }
 
@@ -160,10 +188,10 @@
     window.letterGenerator = new LetterGenerator(document.getElementById('timer-letter-display'));
 
     window.keydownAdvanceLetterList = function(event){
-        if(event.code === 'KeyD' || event.code === 'ArrowRight'){
+        if(window.timer.running === true && (event.code === 'KeyD' || event.code === 'ArrowRight')){
             window.letterGenerator.next();
         }
-        if(event.code === 'KeyA' || event.code === 'ArrowLeft'){
+        if(window.timer.running === true && (event.code === 'KeyA' || event.code === 'ArrowLeft')){
             window.letterGenerator.prev();
         }
        
