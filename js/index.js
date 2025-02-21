@@ -37,3 +37,11 @@ async function changeView(targets, targetId){
         console.error('Error loading page: ', error);
     }
 }
+
+function getRandomElementOfList(list) {
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
