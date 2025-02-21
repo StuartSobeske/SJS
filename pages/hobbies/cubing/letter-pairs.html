@@ -86,10 +86,26 @@
         }
     }
 
+    window.timer = new Timer('letter-pair-trainer-timer');
+
+    addEventListener('keydown', function(event){
+
+        if(event.code === 'Space'){
+            if(window.timer.running === false){
+                window.timer.start()
+            }
+            else {
+                window.timer.stop()
+            }
+        }
+
+    })
+
     let letterPairs = document.querySelectorAll('.letter-pair-selector > div');
     letterPairs.forEach(function(div) {
         div.addEventListener('click', function(e){
             e.target.classList.toggle('disabled');
         });
     });
-</script>
+    
+</script>  

@@ -1,5 +1,6 @@
 import time
 import webbrowser
+import subprocess
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from threading import Thread
 
@@ -14,7 +15,10 @@ class MyServer(SimpleHTTPRequestHandler):
 def start_server():
     with HTTPServer(("", PORT), MyServer) as httpd:
         print(f"Serving on port {PORT}...")
-        Thread(target=webbrowser.open, args=(f"http://localhost:{PORT}",)).start()
+        # Thread(target=webbrowser.open, args=(f"http://localhost:{PORT}",)).start()
+        chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        command = f"cmd /C \"{chrome_path}\" http://localhost:{PORT} --new-window"
+        subprocess.Popen(command)
         httpd.serve_forever()
 
 if __name__ == "__main__":
