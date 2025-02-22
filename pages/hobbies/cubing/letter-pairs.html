@@ -78,8 +78,10 @@
             </div>
             <div id="timer-space-to-stop-display" class="letter-display" style="display: none;">Press Space to end memorization phase</div>
             <div id="timer-results-input-container" style="display: none;" style="width: 50%;">
-                <input id="timer-results-input" style="width: 50%;">
-                <button onclick="timerCheckAnswer()">Check Answer</button>
+                <form onsubmit="window.timerCheckAnswer();return false">
+                    <input type="text" id="timer-results-input" style="width: 50%;" autocomplete="off">
+                    <button type="submit">Check Answer</button>
+                </form>
             </div>
         </div>
     </div>  
@@ -87,7 +89,8 @@
 <script class="init-script">
 
     window.timerCheckAnswer = function(){
-        let answer = document.getElementById('timer-results-input').value;
+        let timerInput = document.getElementById('timer-results-input');
+        let answer = timerInput.value;
         let checkAnswerResponse = window.letterGenerator.checkAnswer(answer);
         document.getElementById('answer-display-answer').innerHTML = checkAnswerResponse.HTMLAnswer;
         document.getElementById('answer-display-guess').innerHTML = checkAnswerResponse.HTMLGuess;
@@ -95,6 +98,7 @@
         document.getElementById('timer-results-input-container').style.display = 'none';
         window.timer.checkingAnswer = false;
         document.getElementById('timer-letter-display').innerHTML = 'Press Space To Begin';
+        timerInput.value = '';
     }
 
     window.LetterGenerator = class {
@@ -108,7 +112,7 @@
             const guessList = upperCase.split('');
             this.letterList.pop();
             const length = Math.min(guessList.length, this.letterList.length);
-            let htmlAnswer = 'Correct Answer :';
+            let htmlAnswer = 'Correct Answer: ';
             let htmlGuess = 'Your Answer:    ';
             let success = true;
             for(let i = 0; i < length; i++) {
