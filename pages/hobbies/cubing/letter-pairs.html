@@ -219,6 +219,7 @@
             if(window.timer.running === false && window.timer.checkingAnswer !== true){
                 let letterList = window.letterGenerator.generateLetterList();
                 if(letterList === false) {
+                    alert('Select at least one letter');
                     return;
                 }
                 window.timer.start();
