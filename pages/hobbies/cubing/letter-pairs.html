@@ -162,12 +162,18 @@
 
             const length = parseInt(document.getElementById('timer-length-input').value);
             let letterList = [];
+            let lastStartLetter = ''
             for(let i = 0; i < length; i ++){
                 if(i % 2 == 1 || i == length - 1){
-                    letterList.push(getRandomElementOfList(this.endLetters));
+                    let endLetter = lastStartLetter;
+                    while(endLetter === lastStartLetter) {
+                        endLetter = getRandomElementOfList(this.endLetters);
+                    }
+                    letterList.push(endLetter);
                 }
                 else {
-                    letterList.push(getRandomElementOfList(this.startLetters));
+                    lastStartLetter = getRandomElementOfList(this.startLetters);
+                    letterList.push(lastStartLetter);
                 }
             }
 
