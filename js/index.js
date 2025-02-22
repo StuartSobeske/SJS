@@ -45,3 +45,10 @@ function getRandomElementOfList(list) {
 function mod(n, m) {
     return ((n % m) + m) % m;
 }
+
+function hideChildren(divId) {
+    let children = Array.prototype.slice.call(document.getElementById(divId).children);
+    children.forEach(element => {
+        element.style.display = 'none';
+    });
+}

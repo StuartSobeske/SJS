@@ -74,7 +74,7 @@
         Press Space To Begin
     </div>
     <div style="grid-column-start: 1; grid-column-end: 4;">
-        <div style="justify-content: center; display: flex; height: 100%;">
+        <div id="letter-pair-answer-container" style="justify-content: center; display: flex; height: 100%;">
             <div style="display:none" id="answer-displays">
                 <div id="answer-display-answer"></div>
                 <div id="answer-display-guess"></div>
@@ -217,12 +217,15 @@
 
         if(event.code === 'Space'){
             if(window.timer.running === false && window.timer.checkingAnswer !== true){
+                hideChildren('letter-pair-answer-container');
                 let letterList = window.letterGenerator.generateLetterList();
                 if(letterList === false) {
-                    alert('Select at least one letter');
+                    document.getElementById('timer-space-to-stop-display').style.display = '';
+                    document.getElementById('timer-space-to-stop-display').innerHTML = 'Please select at least one letter';
                     return;
                 }
                 window.timer.start();
+                document.getElementById('timer-space-to-stop-display').innerHTML = 'Press Space to end memorization phase';
                 document.getElementById('timer-space-to-stop-display').style.display = '';
                 document.getElementById('timer-results-input-container').style.display = 'none';
                 document.getElementById('answer-displays').style.display = 'none';
