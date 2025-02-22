@@ -93,7 +93,8 @@
         document.getElementById('answer-display-guess').innerHTML = checkAnswerResponse.HTMLGuess;
         document.getElementById('answer-displays').style.display = '';
         document.getElementById('timer-results-input-container').style.display = 'none';
-
+        window.timer.checkingAnswer = false;
+        document.getElementById('timer-letter-display').innerHTML = 'Press Space To Begin';
     }
 
     window.LetterGenerator = class {
@@ -210,6 +211,7 @@
                 window.timer.start();
                 document.getElementById('timer-space-to-stop-display').style.display = '';
                 document.getElementById('timer-results-input-container').style.display = 'none';
+                document.getElementById('answer-displays').style.display = 'none';
             }
             else if (window.timer.running === true){
                 window.timer.stop();
