@@ -1,33 +1,36 @@
 <div class="letter-pair-trainer">
     <div style="grid-column-start: 1; grid-column-end:2 ; grid-row-start: 1; grid-row-end: 4; ">
-        <div>Letter Pairs:</div>        
+        <div style="display: flex;">
+            <div>Letter Pairs:</div>
+            <div id="letter-pair-toggle" class="green-div-button" style="margin-left: auto;">Toggle All</div>
+        </div>     
         <div class="letter-pair-selector">
-            <div>A</div>
-            <div>B</div>
-            <div>C</div>
-            <div>D</div>
-            <div>E</div>
-            <div>F</div>
-            <div>G</div>
-            <div>H</div>
-            <div>I</div>
-            <div>J</div>
-            <div>K</div>
-            <div>L</div>
-            <div>M</div>
-            <div>N</div>
-            <div>O</div>
-            <div>P</div>
-            <div>Q</div>
-            <div>R</div>
-            <div>S</div>
-            <div>T</div>
-            <div>U</div>
-            <div>V</div>
-            <div id="letter-pair-selector-w">W</div>
-            <div id="letter-pair-selector-x">X</div>
-            <div id="letter-pair-selector-y">Y</div>
-            <div id="letter-pair-selector-z">Z</div>
+            <div class="green-div-button">A</div>
+            <div class="green-div-button">B</div>
+            <div class="green-div-button">C</div>
+            <div class="green-div-button">D</div>
+            <div class="green-div-button">E</div>
+            <div class="green-div-button">F</div>
+            <div class="green-div-button">G</div>
+            <div class="green-div-button">H</div>
+            <div class="green-div-button">I</div>
+            <div class="green-div-button">J</div>
+            <div class="green-div-button">K</div>
+            <div class="green-div-button">L</div>
+            <div class="green-div-button">M</div>
+            <div class="green-div-button">N</div>
+            <div class="green-div-button">O</div>
+            <div class="green-div-button">P</div>
+            <div class="green-div-button">Q</div>
+            <div class="green-div-button">R</div>
+            <div class="green-div-button">S</div>
+            <div class="green-div-button">T</div>
+            <div class="green-div-button">U</div>
+            <div class="green-div-button">V</div>
+            <div class="green-div-button" id="letter-pair-selector-w">W</div>
+            <div class="green-div-button" id="letter-pair-selector-x">X</div>
+            <div class="green-div-button" id="letter-pair-selector-y">Y</div>
+            <div class="green-div-button" id="letter-pair-selector-z">Z</div>
         </div>
         <div class="letter-pair-checkboxes">
             <div>
@@ -148,6 +151,9 @@
         generateLetterList() {
 
             this.startLetters = Array.from(document.querySelectorAll('.letter-pair-selector > div:not(.disabled)')).map(e => e.innerHTML);
+            if(this.startLetters.length === 0){
+                return false;
+            }
             this.endLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             const lettersToRemove = Array.from(document.querySelectorAll('.letter-pair-checkboxes input:not(:checked)')).map(e => e.getAttribute('data-letter'));
             this.endLetters = this.endLetters.filter(e => !lettersToRemove.includes(e));
@@ -211,7 +217,10 @@
 
         if(event.code === 'Space'){
             if(window.timer.running === false && window.timer.checkingAnswer !== true){
-                window.letterGenerator.generateLetterList();
+                let letterList = window.letterGenerator.generateLetterList();
+                if(letterList === false) {
+                    return;
+                }
                 window.timer.start();
                 document.getElementById('timer-space-to-stop-display').style.display = '';
                 document.getElementById('timer-results-input-container').style.display = 'none';
@@ -250,6 +259,22 @@
         });
     });
 
-    
+    document.getElementById('letter-pair-toggle').addEventListener('click', function(e){
+        let toggleOff = e.target.classList.contains('toggle');
+        let letterPairs = document.querySelectorAll('.letter-pair-selector > div');
+        if(toggleOff === true){
+            letterPairs.forEach(function (e) {
+                e.classList.remove('disabled');
+            });
+        }
+        else {
+            letterPairs.forEach(function (e) {
+                e.classList.add('disabled');
+            });
+
+        }
+
+        e.target.classList.toggle('toggle');
+    })
     
 </script>  
