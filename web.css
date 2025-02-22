@@ -105,17 +105,14 @@ body {
   grid-template-columns: repeat(6, 1fr);
 }
 
-.letter-pair-selector > div{
+.green-div-button {
   border: 1px solid rgb(22, 11, 11);
+  background-color: rgb(194, 236, 174);
   margin: 1px;
   border-radius: 5px;
   justify-content: center;
   text-align: center;
   cursor: pointer;
-}
-
-.letter-pair-selector > div {
-  background-color:rgb(194, 236, 174);
 }
 
 .letter-pair-selector > div.disabled {
