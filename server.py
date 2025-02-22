@@ -17,6 +17,7 @@ def start_server():
         print(f"Serving on port {PORT}...")
         # Thread(target=webbrowser.open, args=(f"http://localhost:{PORT}",)).start()
         chrome_path = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        chrome_path = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
         command = f"cmd /C \"{chrome_path}\" http://localhost:{PORT} --new-window"
         subprocess.Popen(command)
         httpd.serve_forever()

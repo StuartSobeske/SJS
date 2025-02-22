@@ -3,6 +3,10 @@ body {
   margin: 0px;
 }
 
+#content {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -92,7 +96,6 @@ body {
 
 .letter-pair-trainer .timer {
   font-size: xxx-large;
-  font-family: sans-serif;
   text-align: center;
   align-content: center;
 }
@@ -134,7 +137,11 @@ body {
 
 .letter-display {
   font-size: xxx-large;
-  font-family: sans-serif;
   text-align: center;
   align-content: center;
+}
+
+#answer-displays > div {
+  font-size: x-large;
+  white-space: pre;
 }

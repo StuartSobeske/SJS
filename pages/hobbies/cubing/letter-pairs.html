@@ -72,6 +72,10 @@
     </div>
     <div style="grid-column-start: 1; grid-column-end: 4;">
         <div style="justify-content: center; display: flex; height: 100%;">
+            <div style="display:none" id="answer-displays">
+                <div id="answer-display-answer"></div>
+                <div id="answer-display-guess"></div>
+            </div>
             <div id="timer-space-to-stop-display" class="letter-display" style="display: none;">Press Space to end memorization phase</div>
             <div id="timer-results-input-container" style="display: none;" style="width: 50%;">
                 <input id="timer-results-input" style="width: 50%;">
@@ -84,8 +88,12 @@
 
     window.timerCheckAnswer = function(){
         let answer = document.getElementById('timer-results-input').value;
-        console.log(answer);
-        window.letterGenerator.checkAnswer(answer);
+        let checkAnswerResponse = window.letterGenerator.checkAnswer(answer);
+        document.getElementById('answer-display-answer').innerHTML = checkAnswerResponse.HTMLAnswer;
+        document.getElementById('answer-display-guess').innerHTML = checkAnswerResponse.HTMLGuess;
+        document.getElementById('answer-displays').style.display = '';
+        document.getElementById('timer-results-input-container').style.display = 'none';
+
     }
 
     window.LetterGenerator = class {
@@ -96,11 +104,40 @@
         checkAnswer(answer) {
             const lettersOnly = answer.replace(/[^a-z]/gi, '');
             const upperCase = lettersOnly.toUpperCase();
-            const answerList = upperCase.split('');
-            const length = Math.max(answerList.length, this.letterList.length);
+            const guessList = upperCase.split('');
+            this.letterList.pop();
+            const length = Math.min(guessList.length, this.letterList.length);
+            let htmlAnswer = 'Correct Answer :';
+            let htmlGuess = 'Your Answer:    ';
+            let success = true;
             for(let i = 0; i < length; i++) {
-                
+                let color = 'green';
+                if(guessList[i] !== this.letterList[i]){
+                    color = 'red';
+                    success = false;
+                }
+
+                htmlAnswer += `<span style='color: ${color}'>${this.letterList[i]}</span>`;
+                htmlGuess += `<span style='color: ${color}'>${guessList[i]}</span>`;
+
+                console.log(guessList[i] + ' ' + this.letterList[i]);
             }
+            if(guessList.length > length) {
+                for(let i = length; i < guessList.length; i++){
+                    htmlGuess += `<span style='color: red'>${guessList[i]}</span>`;
+                }
+            } 
+            else if (this.letterList.length > length) {
+                for (let i = length; i < this.letterList.length; i++) {
+                    htmlAnswer += `<span style='color: red'>${this.letterList[i]}</span>`;
+                }
+            }
+
+            return {
+                "success": success,
+                "HTMLAnswer": htmlAnswer,
+                "HTMLGuess": htmlGuess 
+            };
         }
 
         generateLetterList() {
