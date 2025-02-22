@@ -1,0 +1,255 @@
+<div class="letter-pair-trainer">
+    <div style="grid-column-start: 1; grid-column-end:2 ; grid-row-start: 1; grid-row-end: 4; ">
+        <div>Letter Pairs:</div>        
+        <div class="letter-pair-selector">
+            <div>A</div>
+            <div>B</div>
+            <div>C</div>
+            <div>D</div>
+            <div>E</div>
+            <div>F</div>
+            <div>G</div>
+            <div>H</div>
+            <div>I</div>
+            <div>J</div>
+            <div>K</div>
+            <div>L</div>
+            <div>M</div>
+            <div>N</div>
+            <div>O</div>
+            <div>P</div>
+            <div>Q</div>
+            <div>R</div>
+            <div>S</div>
+            <div>T</div>
+            <div>U</div>
+            <div>V</div>
+            <div id="letter-pair-selector-w">W</div>
+            <div id="letter-pair-selector-x">X</div>
+            <div id="letter-pair-selector-y">Y</div>
+            <div id="letter-pair-selector-z">Z</div>
+        </div>
+        <div class="letter-pair-checkboxes">
+            <div>
+                <label for="letter-pair-w-checkbox">W</label>
+                <input type="checkbox" id="letter-pair-w-checkbox" checked="true" data-checkbox-for="letter-pair-selector-w" data-letter="W" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">X</label>
+                <input type="checkbox" id="letter-pair-x-checkbox" checked="true" data-checkbox-for="letter-pair-selector-x" data-letter="X" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">Y</label>
+                <input type="checkbox" id="letter-pair-y-checkbox" checked="true" data-checkbox-for="letter-pair-selector-y" data-letter="Y" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+            <div>
+                <label for="letter-pair-w-checkbox">Z</label>
+                <input type="checkbox" id="letter-pair-z-checkbox" checked="true" data-checkbox-for="letter-pair-selector-z" data-letter="Z" onclick="handleLetterPairCheckboxClick(this)">
+            </div>
+        </div>
+        <div class="letter-pair-settings">
+            <div>
+                <label for="timer-length-input">training length</label>
+                <input id="timer-length-input" value="10" type="number">
+            </div>
+            <!-- <div>
+                <label for="timer-length-input2">length</label>
+                <input id="timer-length-input2">
+            </div>
+            <div>
+                <label for="timer-length-input3">length</label>
+                <input id="timer-length-input3">
+            </div> -->
+        </div>
+    </div>
+    <div class="timer" style="grid-column-start: 2; grid-column-end: 4; ">
+        <div id="letter-pair-trainer-timer">
+            00.00
+        </div>
+    </div>
+    <div id="timer-letter-display" class="letter-display" style="grid-row-start: 2; grid-row-end: 4; grid-column-start: 2; grid-column-end: 4; ">
+        Press Space To Begin
+    </div>
+    <div style="grid-column-start: 1; grid-column-end: 4;">
+        <div style="justify-content: center; display: flex; height: 100%;">
+            <div style="display:none" id="answer-displays">
+                <div id="answer-display-answer"></div>
+                <div id="answer-display-guess"></div>
+            </div>
+            <div id="timer-space-to-stop-display" class="letter-display" style="display: none;">Press Space to end memorization phase</div>
+            <div id="timer-results-input-container" style="display: none;" style="width: 50%;">
+                <form onsubmit="window.timerCheckAnswer();return false">
+                    <input type="text" id="timer-results-input" style="width: 50%;" autocomplete="off">
+                    <button type="submit">Check Answer</button>
+                </form>
+            </div>
+        </div>
+    </div>  
+</div>
+<script class="init-script">
+
+    window.timerCheckAnswer = function(){
+        let timerInput = document.getElementById('timer-results-input');
+        let answer = timerInput.value;
+        let checkAnswerResponse = window.letterGenerator.checkAnswer(answer);
+        document.getElementById('answer-display-answer').innerHTML = checkAnswerResponse.HTMLAnswer;
+        document.getElementById('answer-display-guess').innerHTML = checkAnswerResponse.HTMLGuess;
+        document.getElementById('answer-displays').style.display = '';
+        document.getElementById('timer-results-input-container').style.display = 'none';
+        window.timer.checkingAnswer = false;
+        document.getElementById('timer-letter-display').innerHTML = 'Press Space To Begin';
+        timerInput.value = '';
+    }
+
+    window.LetterGenerator = class {
+        constructor(div) {
+            this.div = div;
+        }
+
+        checkAnswer(answer) {
+            const lettersOnly = answer.replace(/[^a-z]/gi, '');
+            const upperCase = lettersOnly.toUpperCase();
+            const guessList = upperCase.split('');
+            this.letterList.pop();
+            const length = Math.min(guessList.length, this.letterList.length);
+            let htmlAnswer = 'Correct Answer: ';
+            let htmlGuess = 'Your Answer:    ';
+            let success = true;
+            for(let i = 0; i < length; i++) {
+                let color = 'green';
+                if(guessList[i] !== this.letterList[i]){
+                    color = 'red';
+                    success = false;
+                }
+
+                htmlAnswer += `<span style='color: ${color}'>${this.letterList[i]}</span>`;
+                htmlGuess += `<span style='color: ${color}'>${guessList[i]}</span>`;
+
+                console.log(guessList[i] + ' ' + this.letterList[i]);
+            }
+            if(guessList.length > length) {
+                for(let i = length; i < guessList.length; i++){
+                    htmlGuess += `<span style='color: red'>${guessList[i]}</span>`;
+                }
+            } 
+            else if (this.letterList.length > length) {
+                for (let i = length; i < this.letterList.length; i++) {
+                    htmlAnswer += `<span style='color: red'>${this.letterList[i]}</span>`;
+                }
+            }
+
+            return {
+                "success": success,
+                "HTMLAnswer": htmlAnswer,
+                "HTMLGuess": htmlGuess 
+            };
+        }
+
+        generateLetterList() {
+
+            this.startLetters = Array.from(document.querySelectorAll('.letter-pair-selector > div:not(.disabled)')).map(e => e.innerHTML);
+            this.endLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            const lettersToRemove = Array.from(document.querySelectorAll('.letter-pair-checkboxes input:not(:checked)')).map(e => e.getAttribute('data-letter'));
+            this.endLetters = this.endLetters.filter(e => !lettersToRemove.includes(e));
+            this.index = 0;
+            this.letterList = [];
+
+            const length = parseInt(document.getElementById('timer-length-input').value);
+            let letterList = [];
+            for(let i = 0; i < length; i ++){
+                if(i % 2 == 1 || i == length - 1){
+                    letterList.push(getRandomElementOfList(this.endLetters));
+                }
+                else {
+                    letterList.push(getRandomElementOfList(this.startLetters));
+                }
+            }
+
+            letterList.push('*END*')
+
+            this.display(letterList[0]);
+
+            this.letterList = letterList;
+            return letterList;
+        }
+
+        display(l){
+            this.div.innerHTML = l;
+        }
+
+        prev(){
+            this.index = mod(this.index - 1, this.letterList.length);
+            let l = this.letterList[this.index];
+            this.display(l);
+            return l;
+        }
+
+        next(){
+            this.index = mod(this.index + 1, this.letterList.length);
+            let l = this.letterList[this.index]; 
+            this.display(l);
+            return l;
+        }
+    }
+
+    window.handleLetterPairCheckboxClick = function(e) {
+        let checkboxFor = e.getAttribute('data-checkbox-for');
+        let selector = document.getElementById(checkboxFor);
+        if(e.checked === true) {
+            selector.style.display = '';
+            selector.classList.remove('disabled');
+        }
+        else{
+            selector.style.display = 'none';
+            selector.classList.add('disabled');
+        }
+    }
+
+    window.timer = new Timer('letter-pair-trainer-timer');
+
+    window.keydownTimer = function(event){
+
+        if(event.code === 'Space'){
+            if(window.timer.running === false && window.timer.checkingAnswer !== true){
+                window.letterGenerator.generateLetterList();
+                window.timer.start();
+                document.getElementById('timer-space-to-stop-display').style.display = '';
+                document.getElementById('timer-results-input-container').style.display = 'none';
+                document.getElementById('answer-displays').style.display = 'none';
+            }
+            else if (window.timer.running === true){
+                window.timer.stop();
+                document.getElementById('timer-space-to-stop-display').style.display = 'none';
+                document.getElementById('timer-results-input-container').style.display = '';
+                window.timer.checkingAnswer = true;
+                document.getElementById('timer-letter-display').innerHTML = 'Input answer below ';
+            }
+        }
+
+    }
+
+    window.letterGenerator = new LetterGenerator(document.getElementById('timer-letter-display'));
+
+    window.keydownAdvanceLetterList = function(event){
+        if(window.timer.running === true && (event.code === 'KeyD' || event.code === 'ArrowRight')){
+            window.letterGenerator.next();
+        }
+        if(window.timer.running === true && (event.code === 'KeyA' || event.code === 'ArrowLeft')){
+            window.letterGenerator.prev();
+        }
+       
+    }
+
+    addEventListener('keydown', window.keydownTimer);
+    addEventListener('keydown', window.keydownAdvanceLetterList);
+
+    let letterPairs = document.querySelectorAll('.letter-pair-selector > div');
+    letterPairs.forEach(function(div) {
+        div.addEventListener('click', function(e){
+            e.target.classList.toggle('disabled');
+        });
+    });
+
+    
+    
+</script>  

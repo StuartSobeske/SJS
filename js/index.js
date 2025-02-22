@@ -24,9 +24,24 @@ async function changeView(targets, targetId){
             const html = await response.text();
             const targetId = e.targetId ?? 'content';
             document.getElementById(targetId).innerHTML = html;
+
+            const scriptElement = document.querySelector(`#${targetId} script.init-script`);
+            if(scriptElement !== null && scriptElement !== undefined){
+                const scriptCode = scriptElement.innerText;
+                eval(scriptCode);
+            }
         }
+
     }
     catch(error) {
         console.error('Error loading page: ', error);
     }
+}
+
+function getRandomElementOfList(list) {
+    return list[Math.floor(Math.random() * list.length)];
+}
+
+function mod(n, m) {
+    return ((n % m) + m) % m;
 }

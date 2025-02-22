@@ -1,6 +1,10 @@
 body {
-  background-color: #00382B;
+  background-color: #ebdec7;
   margin: 0px;
+}
+
+#content {
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .grid-container {
@@ -74,4 +78,70 @@ body {
 
 .clickable-image {
   cursor: pointer;
+}
+
+.letter-pair-trainer{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 150px;
+}
+
+.letter-pair-trainer > div {
+  padding: 12px;
+  margin: 1px;
+  border: 2px solid rgb(22, 11, 11);
+  border-radius: 5px;
+  background-color: antiquewhite;
+}
+
+.letter-pair-trainer .timer {
+  font-size: xxx-large;
+  text-align: center;
+  align-content: center;
+}
+
+.letter-pair-selector {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.letter-pair-selector > div{
+  border: 1px solid rgb(22, 11, 11);
+  margin: 1px;
+  border-radius: 5px;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.letter-pair-selector > div {
+  background-color:rgb(194, 236, 174);
+}
+
+.letter-pair-selector > div.disabled {
+  background-color:rgb(243, 124, 45);
+}
+
+.letter-pair-checkboxes {
+  width: 100%;
+}
+
+.letter-pair-checkboxes > div{
+  margin: 5px;
+  display: inline-block;
+}
+
+.letter-pair-settings > div {
+  width: 100%;
+}
+
+.letter-display {
+  font-size: xxx-large;
+  text-align: center;
+  align-content: center;
+}
+
+#answer-displays > div {
+  font-size: x-large;
+  white-space: pre;
 }
